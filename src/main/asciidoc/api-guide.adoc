@@ -72,19 +72,17 @@ include::{snippets}/error-example/http-response.adoc[]
 
 
 [[resources]]
-= Resources
+= 资源列表
 
 
 [[resources_categories]]
-== 分类接口
+== 分类
 
 分类接口用于查询和维护分类信息
 
 
 
 [[resources_categories_list]]
-=== Listing categories
+=== 查询分类列表
 
-A `GET` request will list all of the service's categories.
-
-operation::category-list-example[snippets='response-fields,curl-request,http-response']
+operation::category-list-example[snippets='http-request,request-parameters,response-fields,curl-request,http-response']

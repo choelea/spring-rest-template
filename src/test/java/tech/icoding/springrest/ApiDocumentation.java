@@ -95,8 +95,7 @@ public class ApiDocumentation {
 				.andDo(print()).andExpect(status().isBadRequest()).andExpect(jsonPath("error", is("Bad Request")))
 				.andExpect(jsonPath("timestamp", is(notNullValue()))).andExpect(jsonPath("status", is(400)))
 				.andExpect(jsonPath("path", is(notNullValue())))
-				.andDo(document("error-example",
-						responseFields(
+				.andDo(this.documentationHandler.document(responseFields(
 								fieldWithPath("error").description("The HTTP error that occurred, e.g. `Bad Request`"),
 								fieldWithPath("message").description("A description of the cause of the error"),
 								fieldWithPath("path").description("The path to which the request was made"),
@@ -113,12 +112,10 @@ public class ApiDocumentation {
 		createCategory("管理系统");
 		createCategory("视频监控");
 
-		this.mockMvc.perform(get("/categories"))
+		this.mockMvc.perform(get("/categories?page=0&size=10"))
 		.andExpect(status().isOk())
 		.andDo(this.documentationHandler.document(springPageRequestFields(),
 				springPageResponseFields()));
-			
-				
 	}
 
 	private void createCategory(String name) {
@@ -142,7 +139,7 @@ public class ApiDocumentation {
 				subsectionWithPath("sort").description("排序信息"));
 	}
 	private  RequestParametersSnippet springPageRequestFields() {
-		return requestParameters(parameterWithName("page").description("第几页，从0开始"),
-				parameterWithName("size").description("每页多少条记录"));
+		return requestParameters(parameterWithName("page").description("第几页，可为空，默认从0开始；0代表第一页"),
+				parameterWithName("size").description("每页多少条记录；可为空，默认20"));
 	}
 }
